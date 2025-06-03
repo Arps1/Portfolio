@@ -1,12 +1,10 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-3xl text-white leading-tight">
+            Portofolio Saya
+        </h2>
+    </x-slot>
 
-@section('header')
-    <h2 class="font-semibold text-3xl text-white leading-tight">
-        Portofolio Saya
-    </h2>
-@endsection
-
-@section('content')
     <section class="py-16 px-4 bg-gray-100">
         <div class="max-w-7xl mx-auto">
             <!-- Hero Section -->
@@ -19,10 +17,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($portfolios as $portfolio)
                     <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                        <img src="{{ $portfolio->image ? asset('storage/' . $portfolio->image) : 'https://via.placeholder.com/500x300' }}" alt="{{ $portfolio->title }}" class="w-full h-48 object-cover">
+                        <img src="{{ $portfolio->image ? asset('storage/' . $portfolio->image) : 'https://via.placeholder.com/500x300' }}" 
+                             alt="{{ $portfolio->title }}" 
+                             class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold text-gray-800">{{ $portfolio->title }}</h3>
-                            <p class="text-gray-600 mt-2">{{ Str::limit($portfolio->description, 100) }}</p>
+                            <p class="text-gray-600 mt-2">{{ \Illuminate\Support\Str::limit($portfolio->description, 100) }}</p>
                             <a href="{{ route('portfolio.show', $portfolio->id) }}" class="mt-4 inline-block text-blue-500 hover:text-blue-700">Lihat Detail</a>
                         </div>
                     </div>
@@ -44,4 +44,4 @@
             </div>
         </div>
     </section>
-@endsection
+</x-app-layout>

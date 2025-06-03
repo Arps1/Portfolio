@@ -1,12 +1,10 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-3xl text-white leading-tight">
+            Portofolio Saya
+        </h2>
+    </x-slot>
 
-@section('header')
-    <h2 class="font-semibold text-3xl text-white leading-tight">
-        Portofolio Saya
-    </h2>
-@endsection
-
-@section('content')
     <section class="py-16 px-4 bg-gray-100">
         <div class="max-w-7xl mx-auto">
             <!-- Hero Section -->
@@ -24,7 +22,6 @@
                             @if($portfolio->image)
                                 <img src="{{ asset('storage/' . $portfolio->image) }}" alt="{{ $portfolio->title }}" class="w-full h-full object-cover">
                             @else
-                                <!-- Template Gambar jika tidak ada -->
                                 <div class="w-full h-full bg-gray-300 flex items-center justify-center">
                                     <span class="text-white font-semibold text-xl">No Image</span>
                                 </div>
@@ -54,25 +51,24 @@
             </div>
         </div>
     </section>
-@endsection
 
-<!-- CSS untuk gambar placeholder -->
-<style>
-    .portfolio-image-container {
-        position: relative;
-        overflow: hidden;
-        border-bottom: 3px solid #ddd;
-    }
+    <!-- CSS untuk gambar placeholder -->
+    <style>
+        .portfolio-image-container {
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid #ddd;
+        }
 
-    .portfolio-image-container .no-image {
-        background: #e0e0e0;
-        border-radius: 8px;
-        box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
-    }
+        .portfolio-image-container .no-image {
+            background: #e0e0e0;
+            border-radius: 8px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
+        }
 
-    .portfolio-image-container .no-image span {
-        font-size: 18px;
-        color: #555;
-    }
-</style>
-
+        .portfolio-image-container .no-image span {
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</x-app-layout>

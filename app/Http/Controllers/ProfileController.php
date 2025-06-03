@@ -17,9 +17,9 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        $user = Auth::user(); // Ambil data user yang sedang login
-        dd($user);
-        return view('profile.edit', compact('user'));
+        return view('profile.edit', [
+            'user' => auth()->user()
+        ]);
     }
 
     /**

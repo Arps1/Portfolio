@@ -41,7 +41,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         // Only validate avatar if a file is uploaded
         if (!$this->hasFile('avatar')) {
-            $this->request->remove('avatar');
+            $this->merge(['avatar' => null]);
         }
     }
 }

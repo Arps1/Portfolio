@@ -5,6 +5,10 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\PageController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\KontakController;
+
+
 
 // Halaman Utama
 Route::get('/', function () {
@@ -18,7 +22,6 @@ Route::get('/dashboard', function () {
 
 // Auth user
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/portfolio', [PageController::class, 'portfolio'])->name('portfolio');
     Route::get('/portfolio/{portfolio}', [PortfolioController::class, 'show'])->name('portfolio.show');
     Route::get('/portfolio', [PortfolioController::class, 'userPortfolio'])->name('portfolio');
@@ -28,6 +31,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile/edit', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile/edit', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    Route::get('/test', function () {
+        return view('test');
+    });
 });
 // CRUD Projects untuk Admin
 Route::middleware(['auth', 'isAdmin'])->group(function () {
@@ -39,9 +46,10 @@ Route::get('/tentang', function () {
     return view('tentang');
 })->name('tentang');
 
-Route::get('/kontak', function () {
-    return view('kontak');
-})->name('kontak');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/kontak', [KontakController::class, 'index'])->name('kontak.index');
+    Route::post('/kontak', [KontakController::class, 'kirim'])->name('kontak.kirim');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware([IsAdmin::class])->group(function () {
@@ -63,5 +71,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/portfolio/{portfolio}', [PortfolioController::class, 'update'])->name('portfolio.update');
     Route::delete('/portfolio/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy');
 });
+
+Route::middleware(['auth', 'can:admin'])->group(function () {
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+});
+
 
 require __DIR__.'/auth.php';

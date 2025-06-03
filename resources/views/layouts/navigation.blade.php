@@ -29,7 +29,7 @@
                     <x-nav-link :href="route('tentang')" :active="request()->routeIs('tentang')">
                         {{ __('Tentang') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('kontak')" :active="request()->routeIs('kontak')">
+                    <x-nav-link :href="route('kontak.index')" :active="request()->routeIs('kontak.index')">
                         {{ __('Kontak') }}
                     </x-nav-link>
                 </div>
@@ -102,7 +102,7 @@
             <x-responsive-nav-link :href="route('tentang')" :active="request()->routeIs('tentang')">
                 {{ __('Tentang') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('kontak')" :active="request()->routeIs('kontak')">
+            <x-responsive-nav-link :href="route('kontak.index')" :active="request()->routeIs('kontak.index')">
                 {{ __('Kontak') }}
             </x-responsive-nav-link>
         </div>

@@ -84,5 +84,6 @@ class PortfolioController extends Controller
         // Mengirimkan data portofolio ke view
         return view('portfolio.user-index', compact('portfolios'));
     }
+    
 
 }
