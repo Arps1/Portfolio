@@ -60,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('portfolios', PortfolioController::class)->middleware('auth');
         Route::get('/admin/pesan', [KontakController::class, 'index'])->name('admin.pesan.index');
         Route::get('/admin/pesan/{id}', [KontakController::class, 'show'])->name('admin.pesan.show');
+        Route::get('/admin/portfolio/{portfolio}', [PortfolioController::class, 'show'])->name('admin.portfolio.show');
 
     });
 });

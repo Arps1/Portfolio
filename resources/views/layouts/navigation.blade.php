@@ -20,12 +20,12 @@
                             <x-nav-link :href="route('portfolio.index')" :active="request()->routeIs('portfolio.index')">
                                 {{ __('Kelola Portfolio') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('admin.pesan.index')" :active="request()->routeIs('admin.pesan.index')">
+                            <x-nav-link :href="route('admin.pesan.index')" :active="request()->routeIs('pesan.index')">
                                 {{ __('Pesan Masuk') }}
                             </x-nav-link>
                         @else
                             <x-nav-link :href="route('portfolio')" :active="request()->routeIs('portfolio')">
-                                {{ __('Portfolio Saya') }}
+                                {{ __('Daftar Portfolio') }}
                             </x-nav-link>
                             <x-nav-link :href="route('kontak.index')" :active="request()->routeIs('kontak.index')">
                                 {{ __('Kontak') }}

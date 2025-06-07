@@ -73,9 +73,9 @@
 
                 <!-- File Upload -->
                 <div class="mb-4">
-                    <label for="file" class="form-label">Unggah File</label>
-                    <input type="file" name="file" id="file" class="form-control @error('file') is-invalid @enderror" accept=".html,.yaml,.php,.js,.py,.doc,.pdf,.png,.jpeg,.jpg,.mysql">
-                    @error('file')
+                    <label for="image" class="form-label">Unggah Gambar</label>
+                    <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                    @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
 
@@ -86,6 +86,21 @@
                     @endif
 
                     <div class="preview-container mt-3"></div>
+                </div>
+
+                <!-- File -->
+                <div class="mb-4">
+                    <label for="file" class="form-label">Unggah File</label>
+                    <input type="file" name="file" id="file" class="form-control @error('file') is-invalid @enderror" accept="file/*">
+                    @error('file')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
+                    @if(isset($portfolio) && $portfolio->file)
+                        <div class="mt-3">
+                            <a href="{{ asset('storage/' . $portfolio->file) }}" target="_blank" class="btn btn-primary">Lihat File</a>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Link -->
@@ -109,7 +124,7 @@
 
     <!-- Preview Gambar -->
     <script>
-        document.getElementById('file').addEventListener('change', function(event) {
+        document.getElementById('image').addEventListener('change', function(event) {
             const file = event.target.files[0];
             const previewContainer = document.querySelector('.preview-container');
             previewContainer.innerHTML = '';

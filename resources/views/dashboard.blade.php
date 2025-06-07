@@ -37,7 +37,8 @@
                     <div class="bg-blue-100 p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-semibold text-blue-800">Lihat Karya</h3>
                         <p class="text-gray-700 mt-2 mb-4">Lihat dan kelola karya yang telah dibuat.</p>
-                        <a href="{{ route('portfolio.index') }}" class="text-blue-600 hover:underline font-medium">Akses</a>
+                        <a href="{{ auth()->user()->role === 'admin' ? route('portfolio.index') : route('portfolio') }}" 
+                        class="text-blue-600 hover:underline font-medium">Akses</a>
                     </div>
 
                     <!-- Kontak -->

@@ -31,7 +31,14 @@
                         <div class="p-6">
                             <h3 class="text-xl font-semibold text-gray-800">{{ $portfolio->title }}</h3>
                             <p class="text-gray-600 mt-2">{{ Str::limit($portfolio->description, 100) }}</p>
-                            <a href="{{ route('portfolio.show', $portfolio->id) }}" class="mt-4 inline-block text-blue-500 hover:text-blue-700">Lihat Detail</a>
+
+                            @php
+                                $isAdmin = Auth::check() && Auth::user()->role === 'admin';
+                            @endphp
+
+                            <a href="{{ $isAdmin ? route('admin.portfolio.show', $portfolio->id) : route('portfolio.show', $portfolio->id) }}" class="mt-4 inline-block text-blue-500 hover:text-blue-700">
+                                Lihat Detail
+                            </a>
                         </div>
                     </div>
                 @endforeach

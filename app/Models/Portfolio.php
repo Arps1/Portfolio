@@ -13,8 +13,8 @@ class Portfolio extends Model
         'title',
         'description',
         'image',
+        'file',
         'link',
         'user_id',
-        'file',
     ];
 }

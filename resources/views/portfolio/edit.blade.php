@@ -52,7 +52,7 @@
             <h2>{{ isset($portfolio) ? 'Edit Portfolio' : 'Tambah Portfolio' }}</h2>
 
             <form 
-                action="{{ isset($portfolio) ? route('portfolio.update', $portfolio->id) : route('portfolio.store') }}" 
+                action="{{ isset($portfolio) ? route('user.portfolio.update', $portfolio->id) : route('user.portfolio.store') }}" 
                 method="POST" 
                 enctype="multipart/form-data">
                 
@@ -86,7 +86,7 @@
                 <div class="mb-4">
                     <label for="image" class="form-label">Gambar</label>
                     <input type="file" name="image" id="image" 
-                        class="form-control @error('image') is-invalid @enderror">
+                        class="form-control @error('image') is-invalid @enderror" accept="image/*">
                     @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

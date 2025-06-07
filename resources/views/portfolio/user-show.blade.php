@@ -6,7 +6,6 @@
     @endsection
 
     <style>
-        /* Kontainer gambar dengan kemampuan scroll dan tampilan lebih responsif */
         .portfolio-image-container {
             position: relative;
             max-width: 100%;
@@ -20,15 +19,14 @@
         .portfolio-image {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Menjaga proporsi gambar */
-            transition: transform 0.3s ease; /* Animasi zoom */
+            object-fit: contain;
+            transition: transform 0.3s ease;
         }
 
         .portfolio-image-container:hover .portfolio-image {
-            transform: scale(1.1); /* Zoom saat hover */
+            transform: scale(1.1);
         }
 
-        /* Kontrol zoom */
         .zoom-control {
             position: absolute;
             top: 20px;
@@ -46,7 +44,6 @@
             background-color: rgba(0, 0, 0, 0.7);
         }
 
-        /* Styling untuk tombol dan teks lainnya */
         .portfolio-details {
             padding: 24px;
             background-color: #fff;
@@ -79,28 +76,23 @@
             color: #0056b3;
         }
 
-        /* Tombol Kembali, Edit, Hapus, dan Unduh */
         .btn-container {
-            display: flex;
-            gap: 10px;
             margin-top: 20px;
-            justify-content: space-between;
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
-        .btn-container a, 
-        .btn-container form button,
+        .btn-container a,
         .btn-download {
             padding: 12px 24px;
             font-size: 1rem;
-            text-align: center;
             border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-block;
-            text-decoration: none;
+            text-align: center;
             color: white;
-            border: none;
+            text-decoration: none;
+            transition: 0.3s;
         }
 
         .btn-back {
@@ -109,22 +101,6 @@
 
         .btn-back:hover {
             background-color: #5a6268;
-        }
-
-        .btn-edit {
-            background-color: #007bff;
-        }
-
-        .btn-edit:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-delete {
-            background-color: #dc3545;
-        }
-
-        .btn-delete:hover {
-            background-color: #c82333;
         }
 
         .btn-download {
@@ -138,15 +114,12 @@
 
     <section class="py-16 px-4 bg-gray-100">
         <div class="container mx-auto">
-            <!-- Hero Section -->
             <div class="text-center mb-12">
                 <h1 class="text-4xl font-bold text-gray-800">Detail Portofolio</h1>
                 <p class="text-lg text-gray-600 mt-4">Informasi lengkap tentang portofolio ini.</p>
             </div>
 
-            <!-- Detail Portofolio -->
             <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <!-- Gambar dengan kemampuan scroll dan zoom -->
                 <div class="portfolio-image-container">
                     <img src="{{ $portfolio->image ? asset('storage/' . $portfolio->image) : 'https://via.placeholder.com/500x300' }}" alt="{{ $portfolio->title }}" class="portfolio-image">
                     <div class="zoom-control" onclick="zoomImage()">🔍</div>
@@ -163,47 +136,30 @@
                         @endif
                     </p>
 
-                    <!-- Tombol Unduh Gambar -->
                     @if($portfolio->image)
                         <div class="mt-4">
                             <strong>Unduh Gambar:</strong> 
                             <a href="{{ asset('storage/' . $portfolio->image) }}" 
                                download="{{ basename($portfolio->image) }}" 
-                               class="btn-download mt-4 inline-block">
+                               class="btn-download inline-block mt-2">
                                 ⬇️ Unduh Gambar
                             </a>
                         </div>
                     @endif
 
-                    <!-- Preview dan tombol unduh file selain gambar -->
                     @if($portfolio->file)
                         <div class="mt-4">
                             <strong>Unduh File:</strong> 
                             <a href="{{ asset('storage/' . $portfolio->file) }}" 
                                download="{{ basename($portfolio->file) }}" 
-                               class="btn-download inline-block ml-2">
+                               class="btn-download inline-block mt-2 ml-2">
                                ⬇️ Unduh File
                             </a>
                         </div>
                     @endif
 
-                    <!-- Tombol Kembali dan Admin -->
                     <div class="btn-container mt-4">
-                        @if (Auth::user()->role == 'admin')
-                            <a href="{{ route('portfolio.index') }}" class="btn-back">Kembali ke Daftar Portofolio</a>
-                            <div>
-                                <a href="{{ route('portfolio.edit', $portfolio->id) }}" class="btn-edit">Edit</a>
-                                <form action="{{ route('portfolio.destroy', $portfolio->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin menghapus portofolio ini?')">Hapus</button>
-                                </form>
-                            </div>
-                        @else
-                            @if (Auth::user()->role == 'user')
-                                <a href="{{ route('portfolio') }}" class="btn-back">Kembali ke Daftar Portofolio</a>
-                            @endif
-                        @endif
+                        <a href="{{ route('portfolio.index') }}" class="btn-back">Kembali ke Daftar Portofolio</a>
                     </div>
                 </div>
             </div>
@@ -212,14 +168,10 @@
 
     <script>
         let zoomLevel = 1;
-
-        // Fungsi untuk zoom in dan zoom out gambar
         function zoomImage() {
             const image = document.querySelector('.portfolio-image');
             zoomLevel += 0.1;
-            if (zoomLevel > 2) zoomLevel = 1; // Reset ke ukuran asli setelah zoom in maksimal
-
-            // Apply transform scale ke gambar
+            if (zoomLevel > 2) zoomLevel = 1;
             image.style.transform = `scale(${zoomLevel})`;
         }
     </script>
