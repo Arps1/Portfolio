@@ -47,7 +47,7 @@
             <div class="mt-16 text-center">
                 <h2 class="text-3xl font-bold text-gray-800">Hubungi Saya</h2>
                 <p class="text-gray-600 mt-4">Jika Anda tertarik untuk bekerja bersama saya atau ingin mendiskusikan proyek, jangan ragu untuk menghubungi saya!</p>
-                <a href="{{ route('kontak') }}" class="mt-8 inline-block bg-blue-700 hover:bg-blue-800 text-white py-2 px-6 rounded-lg shadow-lg transition duration-300">Kontak Saya</a>
+                <a href="{{ route('kontak.index') }}" class="mt-8 inline-block bg-blue-700 hover:bg-blue-800 text-white py-2 px-6 rounded-lg shadow-lg transition duration-300">Kontak Saya</a>
             </div>
         </div>
     </section>

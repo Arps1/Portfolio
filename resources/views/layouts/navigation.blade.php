@@ -20,17 +20,20 @@
                             <x-nav-link :href="route('portfolio.index')" :active="request()->routeIs('portfolio.index')">
                                 {{ __('Kelola Portfolio') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('admin.pesan.index')" :active="request()->routeIs('admin.pesan.index')">
+                                {{ __('Pesan Masuk') }}
+                            </x-nav-link>
                         @else
                             <x-nav-link :href="route('portfolio')" :active="request()->routeIs('portfolio')">
                                 {{ __('Portfolio Saya') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('kontak.index')" :active="request()->routeIs('kontak.index')">
+                                {{ __('Kontak') }}
                             </x-nav-link>
                         @endif
                     @endauth
                     <x-nav-link :href="route('tentang')" :active="request()->routeIs('tentang')">
                         {{ __('Tentang') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('kontak.index')" :active="request()->routeIs('kontak.index')">
-                        {{ __('Kontak') }}
                     </x-nav-link>
                 </div>
             </div>

@@ -58,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/portfolio/create', [PortfolioController::class, 'create'])->name('portfolio.create');
         Route::post('/admin/portfolio', [PortfolioController::class, 'store'])->name('portfolio.store');
         Route::resource('portfolios', PortfolioController::class)->middleware('auth');
+        Route::get('/admin/pesan', [KontakController::class, 'index'])->name('admin.pesan.index');
+        Route::get('/admin/pesan/{id}', [KontakController::class, 'show'])->name('admin.pesan.show');
 
     });
 });
