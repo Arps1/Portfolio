@@ -1,9 +1,5 @@
 <x-app-layout>
-    @section('header')
-        <h2 class="font-semibold text-3xl text-white leading-tight">
-            {{ isset($portfolio) ? 'Edit Portfolio' : 'Tambah Portfolio' }}
-        </h2>
-    @endsection
+    <x-slot name="title">Edit Portfolio</x-slot>
 
     <style>
         .portfolio-form-section {
@@ -16,7 +12,7 @@
         }
 
         .portfolio-card {
-            background-color: #ffffff;
+            background-color: white;
             padding: 50px;
             border-radius: 20px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -25,10 +21,10 @@
         }
 
         .portfolio-card h2 {
-            text-align: center;
-            margin-bottom: 30px;
             color: #00796b;
             font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
         }
 
         .form-control:focus {
@@ -49,24 +45,16 @@
 
     <div class="portfolio-form-section">
         <div class="portfolio-card">
-            <h2>{{ isset($portfolio) ? 'Edit Portfolio' : 'Tambah Portfolio' }}</h2>
+            <h2>Edit Portfolio</h2>
 
-            <form 
-                action="{{ isset($portfolio) ? route('user.portfolio.update', $portfolio->id) : route('user.portfolio.store') }}" 
-                method="POST" 
-                enctype="multipart/form-data">
-                
+            <form action="{{ route('portfolio.update', $portfolio->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @if(isset($portfolio))
-                    @method('PUT')
-                @endif
+                @method('PUT')
 
                 <!-- Judul -->
                 <div class="mb-4">
                     <label for="title" class="form-label">Judul</label>
-                    <input type="text" name="title" id="title" 
-                        value="{{ old('title', $portfolio->title ?? '') }}" 
-                        class="form-control @error('title') is-invalid @enderror" required>
+                    <input type="text" name="title" id="title" value="{{ old('title', $portfolio->title) }}" class="form-control @error('title') is-invalid @enderror" required>
                     @error('title')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -75,8 +63,7 @@
                 <!-- Deskripsi -->
                 <div class="mb-4">
                     <label for="description" class="form-label">Deskripsi</label>
-                    <textarea name="description" id="description" rows="4"
-                        class="form-control @error('description') is-invalid @enderror" required>{{ old('description', $portfolio->description ?? '') }}</textarea>
+                    <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" rows="5" required>{{ old('description', $portfolio->description) }}</textarea>
                     @error('description')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -84,29 +71,50 @@
 
                 <!-- Gambar -->
                 <div class="mb-4">
-                    <label for="image" class="form-label">Gambar</label>
-                    <input type="file" name="image" id="image" 
-                        class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                    <label for="image" class="form-label">Unggah Gambar</label>
+                    <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
                     @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
 
-                    @if(isset($portfolio) && $portfolio->image)
+                    @if($portfolio->image)
                         <div class="mt-3">
                             <p>Gambar Lama:</p>
-                            <img src="{{ asset('storage/' . $portfolio->image) }}" 
-                                alt="Gambar Portfolio" class="img-fluid" style="max-width: 200px;">
+                            <img src="{{ asset('storage/' . $portfolio->image) }}" alt="Portfolio Image" class="img-fluid" style="max-width: 200px;">
+                            <small class="text-muted d-block mt-2">* Pilih gambar baru untuk mengganti.</small>
                         </div>
                     @endif
 
                     <div class="preview-container mt-3"></div>
                 </div>
 
+                <!-- File -->
+                <div class="mb-4">
+                    <label for="file" class="form-label">Unggah File</label>
+                    <input type="file" name="file" id="file" class="form-control @error('file') is-invalid @enderror">
+                    @error('file')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
+                    @if($portfolio->file)
+                        <div class="mt-3">
+                            <a href="{{ asset('storage/' . $portfolio->file) }}" target="_blank" class="btn btn-primary">File Lama</a>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Link -->
+                <div class="mb-4">
+                    <label for="link" class="form-label">Link Proyek (Opsional)</label>
+                    <input type="url" name="link" id="link" value="{{ old('link', $portfolio->link) }}" class="form-control @error('link') is-invalid @enderror" placeholder="https://contoh.com">
+                    @error('link')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <!-- Submit -->
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary w-100">
-                        {{ isset($portfolio) ? 'Perbarui' : 'Tambah' }} Portfolio
-                    </button>
+                    <button type="submit" class="btn btn-primary w-100">Perbarui Portfolio</button>
                 </div>
             </form>
         </div>
@@ -116,19 +124,23 @@
     <script>
         document.getElementById('image').addEventListener('change', function(event) {
             const file = event.target.files[0];
-            if (file) {
+            const previewContainer = document.querySelector('.preview-container');
+            previewContainer.innerHTML = '';
+
+            if (file && file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'img-fluid mt-3';
-                    img.style.maxWidth = '200px';
-
-                    const preview = document.querySelector('.preview-container');
-                    preview.innerHTML = '';
-                    preview.appendChild(img);
+                    const imgElement = document.createElement('img');
+                    imgElement.src = e.target.result;
+                    imgElement.classList.add('img-fluid', 'mt-3');
+                    imgElement.style.maxWidth = '200px';
+                    previewContainer.appendChild(imgElement);
                 };
                 reader.readAsDataURL(file);
+            } else if (file) {
+                const text = document.createElement('p');
+                text.innerText = `File siap diunggah: ${file.name}`;
+                previewContainer.appendChild(text);
             }
         });
     </script>

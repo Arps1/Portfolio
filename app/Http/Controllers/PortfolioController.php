@@ -32,8 +32,8 @@ class PortfolioController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
-            'file' => 'nullable|file|mimes:html,yaml,php,js,py,pdf,png,jpeg,jpg,mysql,doc,docx,xls,xlsx,ppt,pptx,txt|max:10240',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:30720',
+            'file' => 'nullable|file|mimes:html,yaml,php,js,py,pdf,png,jpeg,jpg,mysql,doc,docx,xls,xlsx,ppt,pptx,txt|max:30720',
             'link' => 'nullable|url',
         ]);
 
@@ -65,8 +65,8 @@ class PortfolioController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
-            'file' => 'nullable|file|mimes:html,yaml,php,js,py,pdf,png,jpeg,jpg,mysql,doc,docx,xls,xlsx,ppt,pptx,txt|max:10240',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:30720',
+            'file' => 'nullable|file|mimes:html,yaml,php,js,py,pdf,png,jpeg,jpg,mysql,doc,docx,xls,xlsx,ppt,pptx,txt|max:30720',
             'link' => 'nullable|url',
         ]);
 
