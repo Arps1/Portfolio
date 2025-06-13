@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Portfolio;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Str;
+
 
 class PortfolioController extends Controller
 {
@@ -130,4 +132,15 @@ class PortfolioController extends Controller
         $portfolio = Portfolio::findOrFail($id);
         return view('portfolio.user-show', compact('portfolio'));
     }
+
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+
+    $results = Portfolio::where('title', 'like', "%{$query}%")
+        ->orWhere('description', 'like', "%{$query}%")
+        ->get();
+
+    return view('portfolio.search-results', compact('query', 'results'));
+}
 }

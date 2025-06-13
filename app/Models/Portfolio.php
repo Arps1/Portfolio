@@ -17,4 +17,9 @@ class Portfolio extends Model
         'link',
         'user_id',
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

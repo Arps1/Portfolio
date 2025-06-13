@@ -7,6 +7,7 @@ use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KontakController;
+use App\Http\Controllers\ReviewController;
 
 
 
@@ -19,6 +20,9 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/search', [\App\Http\Controllers\PortfolioController::class, 'search'])->name('search');
+
 
 // Auth user
 Route::middleware(['auth'])->group(function () {
@@ -67,7 +71,13 @@ Route::middleware(['auth'])->group(function () {
 
 // Menambahkan Route Resource untuk Portfolio
 Route::resource('portfolios', PortfolioController::class)->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    // Menampilkan daftar review untuk satu portofolio
+    Route::get('/portfolio/{id}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 
+    // Menyimpan review baru
+    Route::post('/portfolio/{id}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+});
 // Route untuk mengedit dan menghapus portfolio oleh admin atau user yang memiliki akses
 Route::middleware(['auth'])->group(function () {
     Route::get('/portfolio/{portfolio}/edit', [PortfolioController::class, 'edit'])->name('portfolio.edit');

@@ -1,9 +1,16 @@
 <x-app-layout>
     <!-- Header -->
     <x-slot name="header">
-        <h2 class="font-semibold text-3xl text-white leading-tight">
-            Portofolio Profesional
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-3xl text-black leading-tight">
+                Dashboard
+            </h2>
+            <!-- Search Bar di sebelah kanan -->
+            <form action="{{ route('search') }}" method="GET" class="flex items-center w-full max-w-md ms-4">
+                <input type="text" name="query" placeholder="Cari portofolio..." class="w-full px-3 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-400 text-sm"/>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 text-sm">Cari</button>
+            </form>
+        </div>
     </x-slot>
 
     <!-- Hero Section -->
