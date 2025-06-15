@@ -18,7 +18,8 @@
                             <th class="p-4 border border-gray-300">Nama</th>
                             <th class="p-4 border border-gray-300">Email</th>
                             <th class="p-4 border border-gray-300">Pesan</th>
-                            <th class="p-4 border border-gray-300">Waktu</th>
+                            <th class="p-4 border border-gray-300">Dikirim Kepada</th>
+                            <th class="p-4 border border-gray-300">Waktu Dikirim</th>
                             <th class="p-4 border border-gray-300">Aksi</th>
                         </tr>
                     </thead>
@@ -28,10 +29,14 @@
                                 <td class="p-4 border border-gray-300">{{ $pesan->nama }}</td>
                                 <td class="p-4 border border-gray-300">{{ $pesan->email }}</td>
                                 <td class="p-4 border border-gray-300">{{ Str::limit($pesan->pesan, 50) }}</td>
-                                <td class="p-4 border border-gray-300 text-sm text-gray-500">{{ $pesan->created_at->format('d M Y H:i') }}</td>
                                 <td class="p-4 border border-gray-300">
-                                    <a href="{{ route('admin.pesan.show', $pesan->id) }}" 
-                                       class="text-blue-600 hover:underline">Detail</a>
+                                    {{ $pesan->user->name ?? 'Umum / Semua' }}
+                                </td>
+                                <td class="p-4 border border-gray-300 text-sm text-gray-500">
+                                    {{ $pesan->created_at->format('d M Y H:i') }}
+                                </td>
+                                <td class="p-4 border border-gray-300">
+                                    <a href="{{ route('admin.pesan.show', $pesan->id) }}" class="text-blue-600 hover:underline">Detail</a>
                                 </td>
                             </tr>
                         @endforeach

@@ -14,7 +14,10 @@
                 <h2 class="font-semibold text-lg mb-1">Email</h2>
                 <p class="text-gray-700">{{ $pesan->email }}</p>
             </div>
-
+            <div>
+                <h2 class="font-semibold text-lg mb-1">Dikirim Kepada</h2>
+                <p class="text-gray-700">{{ $pesan->user->name ?? 'Semua / Umum' }}</p>
+            </div>
             <div>
                 <h2 class="font-semibold text-lg mb-1">Pesan</h2>
                 <p class="whitespace-pre-line text-gray-800 leading-relaxed break-words max-w-full overflow-x-auto">
